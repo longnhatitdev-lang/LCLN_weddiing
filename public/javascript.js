@@ -937,8 +937,8 @@ document.addEventListener("DOMContentLoaded", () => {
 // ==========================================
 // TỰ ĐỘNG CUỘN TRANG auto cuộn trang (SMOOTH AUTO-SCROLL PAGE)
 (function () {
-  let velocity = 0; // Vận tốc cuộn hiện tại (px / frame)
-  let baseSpeed = 0; // Tốc độ cuộn tự động tối thiểu khi hết đà
+  let velocity = 1; // Vận tốc cuộn hiện tại (px / frame)
+  let baseSpeed = 1; // Tốc độ cuộn tự động tối thiểu khi hết đà
   let friction = 0.96; // Hệ số ma sát giảm đà (0.95 - 0.98 là mượt nhất)
   let isTouching = false;
   let animId = null;
