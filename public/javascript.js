@@ -1292,7 +1292,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // ----------------------------------------------------------------------
-  // 3. 3D SLIDER LOGIC (AUTO 1S + SWIPE + PAUSE ON HOVER)
+  // 3. 3D SLIDER LOGIC (AUTO 1S + SWIPE + PAUSE ON HOVER + DOTS)
   // ----------------------------------------------------------------------
   const stage = document.getElementById("stage");
 
@@ -1322,21 +1322,49 @@ document.addEventListener("DOMContentLoaded", () => {
   const prevBtn = document.getElementById("prev");
   const nextBtn = document.getElementById("next");
   const sliderWrapper = document.getElementById("weddingSlider");
+  const dotsContainer = document.getElementById("sliderDots");
 
-  // Khởi tạo Carousel
+  // Khởi tạo Carousel & Render Dots
   const renderCarousel = () => {
-    if (!stage || stage.querySelector(".slide")) return;
-    const fragment = document.createDocumentFragment();
+    if (!stage) return;
 
-    slidesData.forEach((slide, index) => {
-      const slideEl = document.createElement("div");
-      slideEl.className = "slide";
-      slideEl.dataset.index = index;
-      slideEl.innerHTML = `<img src="${slide.src}" alt="${slide.alt}">`;
-      fragment.appendChild(slideEl);
-    });
+    // 1. Render Slides (Giữ nguyên class "slide")
+    if (!stage.querySelector(".slide")) {
+      const fragment = document.createDocumentFragment();
 
-    stage.appendChild(fragment);
+      slidesData.forEach((slide, index) => {
+        const slideEl = document.createElement("div");
+        slideEl.className = "slide";
+        slideEl.dataset.index = index;
+        slideEl.innerHTML = `<img src="${slide.src}" alt="${slide.alt}">`;
+        fragment.appendChild(slideEl);
+      });
+
+      stage.appendChild(fragment);
+    }
+
+    // 2. Render Dots (Tạo theo style class ngắn gọn của code cũ)
+    if (dotsContainer) {
+      dotsContainer.innerHTML = "";
+      const dotsFragment = document.createDocumentFragment();
+
+      slidesData.forEach((_, index) => {
+        const dot = document.createElement("span");
+        dot.className = "dot";
+        dot.dataset.index = index;
+        if (index === currentIndex) dot.classList.add("active");
+
+        // Click vào dot chuyển tới slide tương ứng
+        dot.addEventListener("click", () => {
+          currentIndex = index;
+          updateCarousel();
+        });
+
+        dotsFragment.appendChild(dot);
+      });
+
+      dotsContainer.appendChild(dotsFragment);
+    }
   };
 
   const updateCarousel = () => {
@@ -1344,6 +1372,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const slideElements = stage.querySelectorAll(".slide");
     const total = slidesData.length;
 
+    // Cập nhật slide (Giữ nguyên logic & class cũ)
     slideElements.forEach((slide, index) => {
       let offset = index - currentIndex;
 
@@ -1360,6 +1389,14 @@ document.addEventListener("DOMContentLoaded", () => {
         slide.classList.add("right", `right-${offset}`);
       }
     });
+
+    // Cập nhật trạng thái active cho Dots
+    if (dotsContainer) {
+      const dots = dotsContainer.querySelectorAll(".dot");
+      dots.forEach((dot, index) => {
+        dot.classList.toggle("active", index === currentIndex);
+      });
+    }
   };
 
   const nextSlide = () => {
@@ -1375,12 +1412,12 @@ document.addEventListener("DOMContentLoaded", () => {
   prevBtn?.addEventListener("click", prevSlide);
   nextBtn?.addEventListener("click", nextSlide);
 
-  // --- CHỨC NĂNG AUTO PLAY (1 GIÂY) ---
+  // --- CHỨC NĂNG AUTO PLAY (3 GIÂY) ---
   let autoPlayTimer = null;
 
   const startAutoPlay = () => {
     if (!autoPlayTimer) {
-      autoPlayTimer = setInterval(nextSlide, 3000); // 1000ms = 1s
+      autoPlayTimer = setInterval(nextSlide, 3000);
     }
   };
 
@@ -1391,7 +1428,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  // Dừng auto khi rê chuột vào Slider / Chạy lại khi rê chuột ra
   sliderWrapper?.addEventListener("mouseenter", stopAutoPlay);
   sliderWrapper?.addEventListener("mouseleave", startAutoPlay);
 
@@ -1403,16 +1439,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const index = parseInt(slide.dataset.index, 10);
 
     if (index === currentIndex) {
-      // Khi bấm vào ảnh giữa (active): Mở Lightbox xem toàn bộ 7 ảnh của Slider
       openLightboxGroup(slidesData, index);
     } else {
-      // Bấm ảnh bên cạnh thì xoay slider đến ảnh đó
       currentIndex = index;
       updateCarousel();
     }
   });
 
-  // Touch Swipe cho Slider 3D ngoài màn hình
+  // Touch Swipe cho Slider
   let sliderTouchStartX = 0;
   let sliderTouchEndX = 0;
 
@@ -1443,9 +1477,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // Khởi chạy
   renderCarousel();
   updateCarousel();
-  startAutoPlay(); // Kích hoạt Tự động chạy 1s
+  startAutoPlay();
 });
-
 ///////////// SLIDER DỌC/////////////////////// câu chuyện tình yêu
 (function () {
   "use strict";

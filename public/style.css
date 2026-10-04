@@ -163,7 +163,7 @@ iframe {
 .img_benner-may-1 {
   position: absolute;
   bottom: 0;
-  left: 0;
+  left: 10%;
   width: 300px;
   transform: translate(131px, -132px);
   z-index: 9;
@@ -543,15 +543,18 @@ iframe {
 
 /* ĐẶC BIỆT: Đánh dấu ngày cưới nằm trong trái tim (giống mẫu) */
 .day-item.wedding-day {
-  background-color: #ff4757;
-  /* Màu đỏ của trái tim */
-  color: white;
+  background-image: url(./asset/img/mau13.webp);
+  color: #ff4757;
   font-weight: bold;
   border-radius: 50% 50% 50% 0;
-  /* Tạo hình dáng trái tim mềm mại hoặc bo tròn đỏ nổi bật */
   transform: scale(1.15);
   box-shadow: 0 4px 12px rgba(255, 71, 87, 0.4);
   position: relative;
+  width: 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  font-size: 20px;
 }
 
 /* Thêm điểm nhấn nhỏ cho ngày cưới */
@@ -799,7 +802,7 @@ iframe {
   place-items: center;
 }
 .qr-card {
-  width: 70%;
+  width: fit-content;
   border-radius: 12px;
   padding: 20px;
   display: flex;
@@ -1179,14 +1182,13 @@ footer {
   width: 100%;
   max-width: 260px; /* Độ rộng ban đầu */
   padding: 6px 12px;
-  margin: 0 1rem;
   background: rgba(255, 255, 255, 0.95);
   border: 1px solid #f0d5da;
   border-radius: 30px;
   box-shadow: 0 4px 15px rgba(220, 150, 160, 0.15);
   overflow: hidden;
   position: fixed;
-  left: 0;
+  left: 1rem;
   bottom: calc(0% + 10px);
   z-index: 15;
   height: 30px;
@@ -1253,10 +1255,10 @@ footer {
 .wedding-comment-bar:focus-within .wedding-btn--send,
 .wedding-comment-bar:has(.wedding-input--comment:not(:placeholder-shown))
   .wedding-btn--send {
-  width: 50px; /* Mở rộng chiều rộng thực tế */
-  margin-left: 8px; /* Khoảng cách với ô input */
+  width: 20%;
+  margin-left: 8px;
   opacity: 1;
-  pointer-events: auto; /* Bật lại khả năng click nút */
+  pointer-events: auto;
   transform: scale(1) rotate(0deg) translateX(20px);
 }
 .wedding-modal {
@@ -1721,7 +1723,7 @@ footer {
   bottom: 10px;
   left: 50%;
   width: 2px;
-  background-color: rgba(243, 229, 216, 0.4);
+  background-color: #f1c40f5d;
   transform: translateX(-50%);
 }
 
@@ -1770,7 +1772,7 @@ footer {
   transform: translate(-50%, -50%);
   width: 14px;
   height: 14px;
-  background-color: #f3e5d8;
+  background-color: #dab629;
   border-radius: 50%;
   z-index: 2;
   box-shadow: 0 0 0 3px rgba(88, 17, 26, 0.8);
@@ -1960,7 +1962,7 @@ footer {
   transform: translateY(-50%);
   background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(4px);
-  color: #ffffff;
+  color: #f1c40f;
   border: 1px solid rgba(255, 255, 255, 0.2);
   width: 44px;
   height: 44px;
@@ -2364,14 +2366,14 @@ LIGHTBOX MODAL (ĐA NĂNG: VUỐT & BỘ ĐẾM SỐ ẢNH)
   background: rgba(255, 255, 255, 0.06);
   border: none;
   outline: none;
-  color: rgba(255, 255, 255, 0.8);
+  color: #f1c40f;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .lcln-arrow-btn:hover {
   background: rgba(255, 255, 255, 0.25);
-  color: #ffffff;
+  color: #f1c40f;
   transform: scale(1.1);
 }
 
@@ -2393,7 +2395,7 @@ LIGHTBOX MODAL (ĐA NĂNG: VUỐT & BỘ ĐẾM SỐ ẢNH)
 }
 
 .lcln-dot-indicator.lcln-active {
-  background: #ffffff;
+  background: #f1c40f;
   transform: scale(1.5);
 }
 
@@ -2510,7 +2512,33 @@ LIGHTBOX MODAL (ĐA NĂNG: VUỐT & BỘ ĐẾM SỐ ẢNH)
   background: rgba(255, 255, 255, 0.3);
   transform: scale(1.1);
 }
+.slider-dots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 20px;
+  position: absolute;
+  z-index: 9;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+}
 
+.slider-dots .dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.25);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.slider-dots .dot.active {
+  background-color: #f1c40f;
+  width: 24px;
+  border-radius: 10px;
+}
 .lcln-fullscreen-image-frame {
   position: relative;
   display: flex;
@@ -2539,6 +2567,17 @@ LIGHTBOX MODAL (ĐA NĂNG: VUỐT & BỘ ĐẾM SỐ ẢNH)
   letter-spacing: 0.05em;
   pointer-events: none;
 }
+/* SỬA LỖI CLICK SLIDE SIDE */
+/* Đảm bảo các thuộc tính ẩn/phủ không làm mất vùng click của ảnh side */
+#stage .slide {
+  cursor: pointer !important;
+  pointer-events: auto !important;
+}
+
+#stage .slide * {
+  pointer-events: none; /* Đẩy sự kiện click lên thẳng thẻ cha .slide */
+}
+
 /* TABLET RESPONSIVE (768px - 1024px) */
 @media (max-width: 1024px) and (min-width: 768px) {
   .lcln-slider-wrapper .lcln-container {
@@ -2645,6 +2684,46 @@ LIGHTBOX MODAL (ĐA NĂNG: VUỐT & BỘ ĐẾM SỐ ẢNH)
 /* ==========================================
    RESPONSIVE CHO TABLET & MOBILE
    ========================================== */
+@media (max-width: 480px) {
+  section {
+    font-size: 13px;
+  }
+  .title-big span {
+    font-size: 18px;
+    padding: 4px 25px;
+  }
+  .headig_text p {
+    letter-spacing: 2px;
+    font-size: 12px;
+  }
+  .content_cha-me .item_cha-me .item_name {
+    font-size: 15px;
+  }
+  .item_cha-me {
+    font-size: 14px;
+  }
+  .img_benner-may-1 {
+    left: 10px;
+  }
+  .lcln-card-title {
+    font-size: 18px;
+  }
+  .lcln-card-description {
+    font-size: 14px;
+  }
+  .wedding-widget-wrapper {
+    right: 10px;
+  }
+  #toggleWallBtn,
+  .wedding-comment-bar {
+    left: 10px;
+  }
+  .wedding-comment-bar:focus-within,
+  .wedding-comment-bar:has(.wedding-input--comment:not(:placeholder-shown)) {
+    max-width: calc(100% - 20px);
+  }
+}
+
 @media screen and (max-width: 1024px) {
   .grid_layout {
     grid-template-columns: repeat(2, 1fr);
@@ -2711,7 +2790,7 @@ LIGHTBOX MODAL (ĐA NĂNG: VUỐT & BỘ ĐẾM SỐ ẢNH)
   }
   .baner_bg .baner_bg-right {
     width: 220px;
-    right: -100px;
+    right: -90px;
     bottom: -100px;
   }
   .baner_bg .baner_bg-left {
@@ -2787,12 +2866,12 @@ LIGHTBOX MODAL (ĐA NĂNG: VUỐT & BỘ ĐẾM SỐ ẢNH)
     margin: 0;
   }
   .bg_left {
-    left: 50%;
+    left: 0%;
     width: 80%;
   }
   .bg_right {
     width: 80%;
-    right: 50%;
+    right: 0%;
     transform: translate(50%, -20%);
   }
   .section_eight .bg_right {
@@ -2800,7 +2879,6 @@ LIGHTBOX MODAL (ĐA NĂNG: VUỐT & BỘ ĐẾM SỐ ẢNH)
   }
   .section_eight .bg_left {
     top: -170%;
-    left: 45%;
   }
   .wedding-comment-bar {
     max-width: 130px;
@@ -2868,16 +2946,4 @@ LIGHTBOX MODAL (ĐA NĂNG: VUỐT & BỘ ĐẾM SỐ ẢNH)
   .countdown-title {
     font-size: 18px;
   }
-}
-@media (max-width: 480px) {
-}
-/* SỬA LỖI CLICK SLIDE SIDE */
-/* Đảm bảo các thuộc tính ẩn/phủ không làm mất vùng click của ảnh side */
-#stage .slide {
-  cursor: pointer !important;
-  pointer-events: auto !important;
-}
-
-#stage .slide * {
-  pointer-events: none; /* Đẩy sự kiện click lên thẳng thẻ cha .slide */
 }
