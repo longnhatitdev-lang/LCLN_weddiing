@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Quản trị thiệp cưới</title>
+    <link rel="stylesheet" href="./admin.css" />
+  </head>
+  <body>
+    <header>
+      <strong>💍 Quản trị thiệp cưới</strong>
+      <button id="save">💾 Lưu thay đổi</button>
+    </header>
+    <section id="login" class="login">
+      <h1>Đăng nhập quản trị</h1>
+      <form id="loginForm">
+        <input id="password" type="password" placeholder="Mật khẩu ADMIN_PASSWORD" required />
+        <button>Đăng nhập</button>
+      </form>
+      <p id="message"></p>
+    </section>
+    <main id="workspace" hidden>
+      <aside>
+        <h2>Công cụ</h2>
+        <button id="edit">✏️ Bật sửa trực tiếp</button>
+        <button id="pickimg">🖼️ Đổi ảnh</button>
+        <button id="add">＋ Thêm khối nội dung</button>
+        <button id="reload">🔄 Tải lại</button>
+        <p class="tip"><b>Hướng dẫn nhanh</b></p>
+        <ol class="tip">
+          <li>Bấm <b>Bật sửa trực tiếp</b> rồi bấm vào chữ trong bản xem trước để sửa nội dung.</li>
+          <li>Bấm vào ảnh bất kỳ hoặc nút <b>Đổi ảnh</b> để mở <b>Thư viện ảnh</b> và chọn / tải ảnh mới.</li>
+          <li>Bấm vào slider, lịch, đếm ngược, bản đồ, hộp quà để mở bảng chỉnh sửa.</li>
+          <li>Xong thì bấm <b>Lưu thay đổi</b> để cập nhật trang chính.</li>
+        </ol>
+        <p id="status"></p>
+      </aside>
+      <iframe id="preview" title="Xem trước"></iframe>
+    </main>
+    <script src="./admin.js"></script>
+  </body>
+</html>
