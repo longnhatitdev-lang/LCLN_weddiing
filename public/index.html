@@ -2,7 +2,10 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Thiệp Mời Đám Cưới - Nhật &amp; Hoài" />
     <meta
@@ -28,9 +31,18 @@
   <body class="">
     <main>
       <header class="header">
-        <div class="" id="audio_play">
-          <audio id="my_audio" loop="" src="./asset/audio/le-duong.mp3"></audio>
-          <img src="./asset/icon/audio.png" alt="" />
+        <div class="" id="audio_play" data-music-icon="audio.png">
+          <audio
+            id="my_audio"
+            loop=""
+            src="./asset/audio/le-duong.mp3"
+            preload="none"
+          ></audio>
+          <img
+            id="audio_icon"
+            src="./asset/icon/audio.png"
+            alt="icon nhạc"
+          />
         </div>
       </header>
       <section class="intro_thu">
@@ -348,7 +360,7 @@
         </div>
       </section>
       <section class="section_six">
-        <div class="lcln-card">
+        <div class="lcln-card" id="lcln-timeline">
           <h2 class="lcln-title">Lịch Trình Ngày Cưới</h2>
           <div class="lcln-timeline">
             <!-- Mục 1: Đón khách -->
@@ -559,8 +571,13 @@
         <button id="toggleWallBtn">👀 Hiện lời chúc</button>
         <div class="wedding-widget-wrapper" id="js-wedding-widget">
           <!-- Nút chính trung tâm -->
-          <button class="widget-main-btn" id="js-widget-toggle" title="Menu">
-            <i class="fa-solid fa-heart"></i>
+          <button
+            class="widget-main-btn"
+            id="js-widget-toggle"
+            data-widget-item="main"
+            title="Menu"
+          >
+            <i class="fa-solid fa-heart" data-icon></i>
           </button>
 
           <!-- CẤP 1 -->
@@ -568,9 +585,10 @@
             type="button"
             class="radial-item item-contact-main"
             id="js-btn-contact-main"
+            data-widget-item="contact-main"
             title="Liên hệ"
           >
-            <i class="fa-solid fa-address-book"></i>
+            <i class="fa-solid fa-address-book" data-icon></i>
             <span class="tooltip">Liên hệ</span>
           </button>
 
@@ -578,9 +596,10 @@
             type="button"
             class="radial-item item-share-main"
             id="js-btn-share-main"
+            data-widget-item="share-main"
             title="Chia sẻ"
           >
-            <i class="fa-solid fa-share-nodes"></i>
+            <i class="fa-solid fa-share-nodes" data-icon></i>
             <span class="tooltip">Chia sẻ</span>
           </button>
 
@@ -588,18 +607,22 @@
           <a
             href="tel:0900000000"
             class="sub-item phone-groom"
+            data-widget-item="phone-groom"
+            data-link="1"
             title="Gọi chú rể"
           >
-            <i class="fa-solid fa-phone"></i>
+            <i class="fa-solid fa-phone" data-icon></i>
             <span class="tooltip">Gọi chú rể</span>
           </a>
           <a
             href="https://m.me/your_profile"
             target="_blank"
             class="sub-item msg-groom"
+            data-widget-item="msg-groom"
+            data-link="1"
             title="Nhắn tin chú rể"
           >
-            <i class="fa-brands fa-facebook-messenger"></i>
+            <i class="fa-brands fa-facebook-messenger" data-icon></i>
             <span class="tooltip">Nhắn chú rể</span>
           </a>
 
@@ -608,26 +631,31 @@
             type="button"
             class="sub-item copy-link"
             id="js-copy-link"
+            data-widget-item="copy-link"
             title="Sao chép link"
           >
-            <i class="fa-regular fa-copy"></i>
+            <i class="fa-regular fa-copy" data-icon></i>
             <span class="tooltip">Sao chép link</span>
           </button>
           <a
             href="https://www.facebook.com/sharer/sharer.php"
             target="_blank"
             class="sub-item facebook"
+            data-widget-item="facebook"
+            data-link="1"
             title="Facebook"
           >
-            <i class="fa-brands fa-facebook-f"></i>
+            <i class="fa-brands fa-facebook-f" data-icon></i>
             <span class="tooltip">Share Facebook</span>
           </a>
           <a
             href="fb-messenger://share"
             class="sub-item messenger"
+            data-widget-item="messenger"
+            data-link="1"
             title="Messenger"
           >
-            <i class="fa-brands fa-facebook-messenger"></i>
+            <i class="fa-brands fa-facebook-messenger" data-icon></i>
             <span class="tooltip">Share Messenger</span>
           </a>
         </div>
@@ -718,32 +746,32 @@
               <button onclick="closeGift()">×</button>
             </div>
             <div class="qr-grid">
-              <div class="qr-card">
+              <div class="qr-card" data-gift="groom">
                 <img
                   id="qr1"
                   src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&amp;data=MB-RE"
                 />
                 <div>
-                  <b>Chú rể</b><br />
-                  <span id="stk1">0123456789</span><br />
-                  <span id="stk1">Le Chu Long Nhat</span><br />
-                  <span id="bank1">Tp Bank</span>
+                  <b data-gift-role>Chú rể</b><br />
+                  <span data-gift-owner>Le Chu Long Nhat</span><br />
+                  <span id="stk1" data-gift-acc>0123456789</span><br />
+                  <span id="bank1" data-gift-bank>Tp Bank</span>
                 </div>
                 <button onclick="copy('stk1', this)">Copy STK</button
                 ><button class="primary" onclick="dl('qr1', 'chu-re', this)">
                   Tải Mã QR
                 </button>
               </div>
-              <div class="qr-card">
+              <div class="qr-card" data-gift="bride">
                 <img
                   id="qr2"
                   src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&amp;data=VCB-DAU"
                 />
                 <div>
-                  <b>Cô dâu</b><br />
-                  <span id="stk1">0123456789</span><br />
-                  <span id="stk2">Nguyen Thi Hoai</span><br />
-                  <span id="bank2">Tp Bank</span>
+                  <b data-gift-role>Cô dâu</b><br />
+                  <span data-gift-owner>Nguyen Thi Hoai</span><br />
+                  <span id="stk2" data-gift-acc>9876543210</span><br />
+                  <span id="bank2" data-gift-bank>Tp Bank</span>
                 </div>
                 <button onclick="copy('stk2', this)">Copy STK</button
                 ><button class="primary" onclick="dl('qr2', 'co-dau', this)">

@@ -100,18 +100,41 @@ document.addEventListener("DOMContentLoaded", function () {
   window.addEventListener("pagehide", pauseAudio);
 });
 
-// Đém ngược thời gian
-// Countdown
+// Đếm ngược ngày cưới
+// Countdown — đọc lại data-wedding-date MỖI giây để sửa trực tiếp từ
+// trang quản trị có hiệu lực ngay, và giá trị đã sửa được ghi xuống HTML.
 document.addEventListener("DOMContentLoaded", function () {
   const card = document.querySelector(".countdown-card");
-  const target = new Date(
-    card?.dataset.weddingDate || "2026-12-28T08:00:00",
-  ).getTime();
+  if (!card) return;
+  const titleEl = card.querySelector(".countdown-title");
+  const DEFAULT_TITLE = (titleEl && titleEl.textContent.trim()) || "";
+  const DEFAULT_DATE = card.dataset.weddingDate || "2026-12-28T08:00:00";
+
+  function resolveTarget() {
+    // Ưu tiên giá trị đang sửa trên thẻ, sau đó mới tới thuộc tính,
+    // rồi tới mặc định (hỗ trợ cả định dạng "2026-12-28T08:00" không có giây).
+    const raw =
+      (card.dataset.weddingDate && card.dataset.weddingDate.trim()) ||
+      DEFAULT_DATE;
+    let value = new Date(raw).getTime();
+    if (Number.isNaN(value)) value = new Date(DEFAULT_DATE).getTime();
+    return value;
+  }
+
+  let target = resolveTarget();
+  let lastRaw = card.dataset.weddingDate || "";
+
   function updateCountdown() {
+    // Phát hiện thay đổi từ trang admin -> tính lại mốc thời gian ngay
+    const raw = card.dataset.weddingDate || "";
+    if (raw !== lastRaw) {
+      lastRaw = raw;
+      target = resolveTarget();
+      if (titleEl && DEFAULT_TITLE) titleEl.textContent = DEFAULT_TITLE;
+    }
     const left = target - Date.now();
     if (left < 0) {
-      const title = document.querySelector(".countdown-title");
-      if (title) title.textContent = "Đã diễn ra lễ cưới!";
+      if (titleEl) titleEl.textContent = "Đã diễn ra lễ cưới!";
       return;
     }
     const values = [
@@ -125,6 +148,7 @@ document.addEventListener("DOMContentLoaded", function () {
       if (el) el.textContent = String(values[i]).padStart(2, "0");
     });
   }
+
   updateCountdown();
   setInterval(updateCountdown, 1000);
 });
@@ -189,14 +213,16 @@ const updatePointer = (x, y) => {
 addEventListener("mousemove", (e) => updatePointer(e.clientX, e.clientY), {
   passive: true,
 });
-addEventListener(
-  "touchmove",
-  (e) => {
-    e.preventDefault();
-    updatePointer(e.touches[0].clientX, e.touches[0].clientY);
-  },
-  { passive: false },
-);
+// Chỉ cập nhật vị trí con trỏ để đẩy hạt mưa.
+// TUYỆT ĐỐI không preventDefault ở đây: preventDefault trên touchmove sẽ
+// khoá cuộn trang và khoá cuộn danh sách lời chúc trên điện thoại.
+addEventListener("touchmove", (e) => {
+  const t = e.touches && e.touches[0];
+  if (t) updatePointer(t.clientX, t.clientY);
+}, { passive: true });
+addEventListener("pointermove", (e) => {
+  if (e.pointerType !== "touch") updatePointer(e.clientX, e.clientY);
+}, { passive: true });
 
 class RainParticle {
   constructor() {
